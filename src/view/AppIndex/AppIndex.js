@@ -19,34 +19,33 @@ class AppIndex extends Component {
 	}
 	//选择当前的可视区的页面
 	selectPage(typePage){
-
-		let currentViewPage = <Home />
-		
+		//判断对应的视图种类
 		if(typePage === 'Home'){
 			this.props.history.push('/index/home')
-			currentViewPage = <Home/>
+			
 		} else if (typePage === 'Edit'){
-			this.props.history.push('/edit')
-			currentViewPage = <Edit />
+			this.props.history.push('/index/edit')
+			
 		} else if (typePage === 'Message'){
-			currentViewPage = <Message />
+			
+			this.props.history.push('/index/message')
 		} else if (typePage === 'User'){
-			currentViewPage = <User />
+			
+			this.props.history.push('/index/user')
 		}
-
+        //设置state
 		this.setState({
-			selectTab: typePage,
-			currentView: currentViewPage
+			selectTab: typePage
 		})
 	}
     routerView(){
 		return (
 			<div className="box">
 				<Switch>
-					<Route  path={'/index/home'} component={Home}></Route>
-					<Route  path={'edit'} component={Edit}></Route>
-					<Route  path={'message'} component={Message}></Route>
-					<Route  path={'user'} component={User}></Route>
+					<Route exact  path={'/index/home'} component={Home}></Route>
+					<Route exact  path={'/index/edit'} component={Edit}></Route>
+					<Route exact  path={'/index/message'} component={Message}></Route>
+					<Route exact  path={'/index/user'} component={User}></Route>
 				</Switch>
 			</div>
 		)
@@ -70,17 +69,7 @@ class AppIndex extends Component {
 						selectedIcon={<i className="fa fa-home icon_item"/>
 						}
 					>
-					
-                    <div className="box">
-							<Switch>
-								<Switch>
-									<Route path={'/index/home'} component={Home}></Route>
-									<Route path={'/index/edit'} component={Edit}></Route>
-									<Route path={'/index/message'} component={Message}></Route>
-									<Route path={'/index/user'} component={User}></Route>
-								</Switch>
-							</Switch>
-						</div>
+						{this.routerView()}
 					{/* view */}
 					</TabBar.Item>
 						<TabBar.Item
@@ -94,15 +83,7 @@ class AppIndex extends Component {
 							selectedIcon={<i className="fa fa-send icon_item"/>
 							}
 						>
-					
-						<div className="box">
-							<Switch>
-								<Route path={'/index/home'} component={Home}></Route>
-								<Route path={'/index/edit'} component={Edit}></Route>
-								<Route path={'/index/message'} component={Message}></Route>
-								<Route path={'/index/user'} component={User}></Route>
-							</Switch>
-						</div>
+						{this.routerView()}
 					{/* view */}
 						</TabBar.Item>
 						<TabBar.Item
@@ -118,14 +99,7 @@ class AppIndex extends Component {
 
 						>
 						
-						<div className="box">
-							<Switch>
-								<Route path={'/index/home'} component={Home}></Route>
-								<Route path={'/index/edit'} component={Edit}></Route>
-								<Route path={'/index/message'} component={Message}></Route>
-								<Route path={'/index/user'} component={User}></Route>
-							</Switch>
-						</div>
+						{this.routerView()}
 						{/* view */}
 						</TabBar.Item>
 						<TabBar.Item
@@ -141,15 +115,7 @@ class AppIndex extends Component {
 							}
 
 						>
-					
-						<div className="box">
-							<Switch>
-								<Route  path={'/index/home'} component={Home}></Route>
-								<Route  path={'/index/edit'} component={Edit}></Route>
-								<Route  path={'/index/message'} component={Message}></Route>
-								<Route  path={'/index/user'} component={User}></Route>
-							</Switch>
-						</div>
+						{this.routerView()}
 					{/* view */}
 						</TabBar.Item>
 				</TabBar>
