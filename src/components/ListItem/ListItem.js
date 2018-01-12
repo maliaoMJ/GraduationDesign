@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {formatTime} from '../../util/formatTime'
+import {Link} from 'react-router-dom'
 import './ListItem.less'
 /**
  * Component props
@@ -19,7 +20,9 @@ class ListItem extends Component {
                     </div>
                </div>
                <div className="center_box">
-                 <p className="title">{this.props.data.title}</p>
+                   <Link to={`/detail/${this.props.data.id}`} className="link">
+                       <p className="title">{this.props.data.title}</p>
+                   </Link>
                </div>
                <div className="bottom_box">
                  <div className="icon_item_box">
