@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import {formatTime} from '../../util/formatTime'
 import './ListItem.less'
 /**
  * Component props
@@ -11,29 +12,31 @@ class ListItem extends Component {
         return (
             <div className="List_Item">
                <div className="top_box">
-                    <img src="https://avatars3.githubusercontent.com/u/3118295?v=4&s=120" alt=""/>
+                    <img src={this.props.data.author.avatar_url} alt=""/>
                     <div className="user_info">
-                        <p className="user_name">LuckBoy</p>
-                        <p className="time">2小时以前<span className="actrile_type">#share</span></p>
+                        <p className="user_name">{this.props.data.author.nickname}</p>
+                        <p className="time">{formatTime(this.props.data.create_at)}<span className="actrile_type">#{this.props.data.tab}</span></p>
                     </div>
                </div>
                <div className="center_box">
-                 <p className="title">曾经有一份真挚的爱情摆在我的面前我却没有好好去珍惜，若果上天给我一次从来的机会，我会对那个妹子说三个字，给我滚，别打扰我学习</p>
+                 <p className="title">{this.props.data.title}</p>
                </div>
                <div className="bottom_box">
                  <div className="icon_item_box">
                      <i className="fa fa-eye"></i>&nbsp;
-                     <span className="text">1425</span>
+                     <span className="text">{this.props.data.visit_count}</span>
                  </div>
                  <div className="icon_item_box">
                      <i className="fa fa-comments"></i>&nbsp;
-                     <span className="text">1425</span>
+                     <span className="text">{this.props.data.reply_count}</span>
                  </div>
                 <div className="icon_item_box">
                     <i className="fa fa-clock-o"></i>&nbsp;
-                    <span className="text">2小时前</span>
+                    <span className="text">{formatTime(this.props.data.create_at)}</span>
                 </div>
                </div>
+                <div className={this.props.data.good ? 'arcticle_good':'hide'}  >精华</div>
+                <div  className={this.props.data.top ? 'arcticle_top' : 'hide'}>置顶</div>
             </div>
         )
     }
