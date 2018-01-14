@@ -1,0 +1,105 @@
+.Detail{
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    overflow: auto;
+    .user_header{
+        width:100%;
+        height:40px;
+        display: block;
+        box-sizing: border-box;
+        border-bottom:1px solid #cecaca;
+        flex-direction: row;
+        position: relative;
+            top:0px;
+            left:0px;
+        img{
+            width:30px;
+            height:30px;
+            margin:5px;
+            border-radius: 30px;
+            display: inline-block;
+
+        }
+        .user_info{
+            display: inline-block;
+            overflow: auto;
+            font-size: 0.9em;
+            padding-top: 10px;
+            box-sizing: border-box;
+            height:40px;
+           
+            
+            .nickname{ 
+                color:rgb(2, 243, 2);
+            }
+            .time{
+                font-size: 0.8em;
+                color:gray;
+                padding-left: 10px;
+            }
+            .floor_faster{
+                position: absolute;
+                right: 10px;
+                top:10px;
+                font-size: 0.8em;
+                color:#484747;
+            }
+        }
+    }
+    .detail_content{
+        position: relative;
+        top:40px;
+        flex:1;
+        background:#f6f5f9;
+        margin-bottom: 40px;
+        box-sizing: border-box;
+        p{
+            box-sizing: border-box;
+            
+        }
+        .content_html{
+            width:100%;
+            height:auto;
+           
+            padding:10px;
+            box-sizing: border-box;
+            line-height: 20px;
+            color:#484646;
+            img{
+                width:100%;
+            }
+        }
+        .title{
+            text-align: center;
+            font-size: 1.1em;
+            color:black;
+            width:100%;
+            height:55px;
+            line-height: 22px;
+            padding:10px;
+            box-sizing: border-box;
+            overflow : hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .tip_icon_box{
+            width:100%;
+            height:30px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 0.9em;
+            .icon_item{
+                display: inline-block;
+                width:60px;
+                height:20px;
+                margin-top: 5px;
+                color:gray;
+            }
+        }
+    }
+}
