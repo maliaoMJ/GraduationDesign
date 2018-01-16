@@ -57,6 +57,7 @@ class Home extends Component{
         )
     }
     componentDidMount(){
+        
         var more = false
         const URL = `https://cnodejs.org/api/v1/topics`
         var that = this

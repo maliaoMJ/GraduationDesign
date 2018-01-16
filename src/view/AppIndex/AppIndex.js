@@ -124,6 +124,7 @@ class AppIndex extends Component {
 	}
 	componentDidMount() {
 		console.log(this.props.history)
+		this.props.history.push('/index/home')
 		
 	}
 }

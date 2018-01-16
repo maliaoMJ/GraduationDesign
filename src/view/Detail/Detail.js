@@ -2,6 +2,7 @@ import React ,{Component} from 'react'
 import TitleHeader from '../../components/TitleHeader/TitleHeader'
 import Loadding from '../../components/Loadding/Loadding'
 import getData from '../../util/getData'
+import { formatTime } from '../../util/formatTime'
 import 'github-markdown-css'
 import './Detail.less'
 
@@ -24,7 +25,7 @@ class Detail extends Component{
                     <div className="user_header ">
                         <img src={this.state.user.avatar_url} alt="没有见过这么帅的图像吗？" />
                         <div className="user_info clearfix">
-                            <span className="nickname">{this.state.user.loginname}</span><span className="time">1小时前</span>
+                            <span className="nickname">{this.state.user.loginname}</span><span className="time">{formatTime(this.state.detailContent.last_reply_at)}</span>
                             <span className="floor_faster">#楼主</span>
                         </div>
                     </div>
