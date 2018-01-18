@@ -6,6 +6,8 @@ import Loadding from '../../components/Loadding/Loadding'
 
 
 import "./Home.less"
+var more = false
+const URL = `https://cnodejs.org/api/v1/topics`
 
 class Home extends Component{
     constructor(props){
@@ -25,8 +27,145 @@ class Home extends Component{
             testCurrentPage:1
         }
     }
-    onTabChange(tab){
-      console.log(tab)
+  
+// 加载数据函数
+  getMoreData(that, url, PageNumber, dataType) {
+
+        let allresult = getDataMethod.getDataByGet(`${url}?page=${PageNumber}&tab=${dataType}&limit=20`)
+        allresult
+            .then((data) => { return data.json() })
+            .then((json) => {
+                if (json.success) {
+                    if (dataType === 'all') {
+
+                        that.setState({
+                            allResult: that.state.allResult.concat(json.data),
+                            allCurrentPage: that.state.allCurrentPage + 1
+                        })
+                        
+                    } else if (dataType === 'good') {
+                        that.setState({
+                            goodResult: that.state.goodResult.concat(json.data),
+                            goodCurrentPage: that.state.goodCurrentPage + 1
+                        })
+                    } else if (dataType === 'share') {
+                        that.setState({
+                            shareResult: that.state.shareResult.concat(json.data),
+                            shareCurrentPage: that.state.shareCurrentPage + 1
+                        })
+                    } else if (dataType === 'ask') {
+                        that.setState({
+                            askResult: that.state.askResult.concat(json.data),
+                            askCurrentPage: that.state.askCurrentPage + 1
+                        })
+                    } else if (dataType === 'job') {
+                        that.setState({
+                            jobResult: that.state.jobResult.concat(json.data),
+                            jobCurrentPage: that.state.jobCurrentPage + 1
+                        })
+                    } else if (dataType === 'dev') {
+                        that.setState({
+                            testResult: that.state.testResult.concat(json.data),
+                            testCurrentPage: that.state.testCurrentPage + 1
+                        })
+                    }
+                    more = false
+                } else {
+                    console.log('请求数据出错！')
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+
+// 无限加载
+    /**
+     * 
+     * @param {*} stateType  state 类型 
+     * @param {*} pageNumber 当前page类型以及页码
+     * @param {*} type  请求数据的tab 类型
+     * 
+     */
+        
+        
+    scrollBtoom(that, dataType) {
+    let screenY = window.screen.height
+    // 默认allPanel
+    var typePanel = that.refs.allPanel
+    if (dataType === 'all') {
+        typePanel = that.refs.allPanel
+
+    } else if (dataType === 'good') {
+        typePanel = that.refs.goodPanel
+    } else if (dataType === 'share') {
+        typePanel = that.refs.sharePanel
+    } else if (dataType === 'ask') {
+        typePanel = that.refs.askPanel
+    } else if (dataType === 'job') {
+        typePanel = that.refs.jobPanel
+    } else if (dataType === 'dev') {
+        typePanel = that.refs.testPanel
+    }
+
+    typePanel.addEventListener('scroll', () => {
+        var loaddingElementHeight = that.refs.allloaddingElement.getBoundingClientRect().top
+        if (dataType === 'all') {
+            loaddingElementHeight = that.refs.allloaddingElement.getBoundingClientRect().top
+        } else if (dataType === 'good') {
+            loaddingElementHeight = that.refs.goodloaddingElement.getBoundingClientRect().top
+        } else if (dataType === 'share') {
+            loaddingElementHeight = that.refs.shareloaddingElement.getBoundingClientRect().top
+        } else if (dataType === 'ask') {
+            loaddingElementHeight = that.refs.askloaddingElement.getBoundingClientRect().top
+        } else if (dataType === 'job') {
+            loaddingElementHeight = that.refs.jobloaddingElement.getBoundingClientRect().top
+        } else if (dataType === 'dev') {
+            loaddingElementHeight = that.refs.testloaddingElement.getBoundingClientRect().top
+        }
+        if (screenY - loaddingElementHeight > 70) {
+            if (more) {
+                return
+            } else {
+                more = true
+                if (dataType === 'all') {
+                    that.getMoreData(that, URL, that.state.allCurrentPage, dataType)
+
+                } else if (dataType === 'good') {
+                    that.getMoreData(that, URL, that.state.goodCurrentPage, dataType)
+                } else if (dataType === 'share') {
+                    that.getMoreData(that, URL, that.state.shareCurrentPage, dataType)
+                } else if (dataType === 'ask') {
+                    that.getMoreData(that, URL, that.state.askCurrentPage, dataType)
+                } else if (dataType === 'job') {
+                    that.getMoreData(that, URL, that.state.jobCurrentPage, dataType)
+                } else if (dataType === 'dev') {
+                    that.getMoreData(that, URL, that.state.testCurrentPage, dataType)
+                }
+
+            }
+        }
+    })
+}
+// 点击切换或者滑动切换 面板
+    onTabChange(tab) {
+        let dataType = tab.type
+        console.log(tab)
+        if (dataType === 'all') {
+            this.scrollBtoom(this,'all')
+
+        } else if (dataType === 'good') {
+            this.scrollBtoom(this,'good')
+        } else if (dataType === 'share') {
+            this.scrollBtoom(this,'share')
+        } else if (dataType === 'ask') {
+            this.scrollBtoom(this,'ask')
+        } else if (dataType === 'job') {
+            this.scrollBtoom(this,'job')
+        } else if (dataType === 'dev') {
+            this.scrollBtoom(this,'dev')
+        }
     }
     render(){
         const tabs = [
@@ -112,150 +251,30 @@ class Home extends Component{
         )
     }
     componentDidMount(){ 
-        var more = false
-        const URL = `https://cnodejs.org/api/v1/topics`
-        var that = this
-        // 加载数据函数
-        function getMoreData(url, PageNumber, dataType){
-            
-            let allresult = getDataMethod.getDataByGet(`${url}?page=${PageNumber}&tab=${dataType}&limit=20`)
-            allresult
-                .then((data) => { return data.json() })
-                .then((json) => {
-                    if (json.success) {
-                        if(dataType === 'all'){
-                     
-                            that.setState({
-                                allResult: that.state.allResult.concat(json.data),
-                                allCurrentPage:that.state.allCurrentPage + 1
-                            })
-                            console.log(that.state.allCurrentPage)
-                        }else if(dataType === 'good'){
-                             that.setState({
-                                 goodResult: that.state.goodResult.concat(json.data),
-                                 goodCurrentPage:that.state.goodCurrentPage + 1
-                            })
-                        }else if(dataType === 'share'){
-                            that.setState({
-                                shareResult: that.state.shareResult.concat(json.data),
-                                shareCurrentPage:that.state.shareCurrentPage + 1
-                            })
-                        }else if(dataType === 'ask'){
-                           that.setState({
-                               askResult: that.state.askResult.concat(json.data),
-                               askCurrentPage:that.state.askCurrentPage + 1
-                            })
-                        }else if (dataType === 'job') {
-                           that.setState({
-                               jobResult: that.state.jobResult.concat(json.data),
-                               jobCurrentPage:that.state.jobCurrentPage + 1
-                            })
-                        }else if (dataType === 'dev') {
-                           that.setState({
-                               testResult: that.state.testResult.concat(json.data),
-                               testCurrentPage:that.state.testCurrentPage + 1
-                            })
-                        }
-                        more = false
-                    } else {
-                        console.log('请求数据出错！')
-                    }
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }
         
-     
+        
        
-        // 无限加载
-        /**
-         * 
-         * @param {*} stateType  state 类型 
-         * @param {*} pageNumber 当前page类型以及页码
-         * @param {*} type  请求数据的tab 类型
-         * 
-         */
         
-        let screenY = window.screen.height
-        function scrollBtoom( dataType) {
-            // 默认allPanel
-            var typePanel = that.refs.allPanel
-            if (dataType === 'all') {
-                typePanel = that.refs.allPanel
-
-            } else if (dataType === 'good') {
-                typePanel = that.refs.goodPanel
-            } else if (dataType === 'share') {
-                typePanel = that.refs.sharePanel
-            } else if (dataType === 'ask') {
-                typePanel = that.refs.askPanel
-            } else if (dataType === 'job') {
-                typePanel = that.refs.jobPanel
-            } else if (dataType === 'dev') {
-                typePanel = that.refs.testPanel
-            }
-            
-            typePanel.addEventListener('scroll', () => {
-                var loaddingElementHeight = that.refs.allloaddingElement.getBoundingClientRect().top
-                if (dataType === 'all') {
-                     loaddingElementHeight = that.refs.allloaddingElement.getBoundingClientRect().top
-                } else if (dataType === 'good') {
-                     loaddingElementHeight = that.refs.goodloaddingElement.getBoundingClientRect().top
-                } else if (dataType === 'share') {
-                     loaddingElementHeight = that.refs.shareloaddingElement.getBoundingClientRect().top
-                } else if (dataType === 'ask') {
-                     loaddingElementHeight = that.refs.askloaddingElement.getBoundingClientRect().top
-                } else if (dataType === 'job') {
-                     loaddingElementHeight = that.refs.jobloaddingElement.getBoundingClientRect().top
-                } else if (dataType === 'dev') {
-                     loaddingElementHeight = that.refs.testloaddingElement.getBoundingClientRect().top
-                }
-                if (screenY - loaddingElementHeight > 70) {
-                    if (more) {
-                        return
-                    } else {
-                        console.log('getmore')
-                        more = true
-                        if (dataType === 'all') {
-                            getMoreData(URL, that.state.allCurrentPage, dataType)
-                         
-                        } else if (dataType === 'good') {
-                            getMoreData(URL, that.state.goodCurrentPage, dataType)
-                        } else if (dataType === 'share') {
-                            getMoreData(URL, that.state.shareCurrentPage, dataType)
-                        } else if (dataType === 'ask') {
-                            getMoreData(URL, that.state.askCurrentPage, dataType)
-                        } else if (dataType === 'job') {
-                            getMoreData(URL, that.state.jobCurrentPage, dataType)
-                        } else if (dataType === 'dev') {
-                            getMoreData(URL, that.state.testCurrentPage, dataType)
-                        }
-                        
-                    }
-                }
-            })
-        }
         // 初始化
        
 
-        getMoreData( URL,this.state.goodCurrentPage,'good')
+        this.getMoreData(this, URL,this.state.goodCurrentPage,'good')
         // scrollBtoom('good')
 
-        getMoreData( URL,this.state.shareCurrentPage,'share')
+        this.getMoreData(this, URL,this.state.shareCurrentPage,'share')
         // scrollBtoom('share')
 
-        getMoreData( URL,this.state.askCurrentPage,'ask')
+       this.getMoreData(this, URL,this.state.askCurrentPage,'ask')
         // scrollBtoom('ask')
 
-        getMoreData( URL,this.state.jobCurrentPage,'job')
+        this.getMoreData(this, URL,this.state.jobCurrentPage,'job')
         // scrollBtoom('job')
 
-        getMoreData( URL,this.state.testCurrentPage,'dev')
+        this.getMoreData(this, URL,this.state.testCurrentPage,'dev')
         // scrollBtoom('dev')
 
-        getMoreData(URL, this.state.allCurrentPage, 'all')
-        scrollBtoom('all')
+        this.getMoreData(this,URL, this.state.allCurrentPage, 'all')
+        this.scrollBtoom(this,'all')
             
     }
 

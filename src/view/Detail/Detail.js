@@ -2,6 +2,7 @@ import React ,{Component} from 'react'
 import TitleHeader from '../../components/TitleHeader/TitleHeader'
 import Loadding from '../../components/Loadding/Loadding'
 import getData from '../../util/getData'
+import commentsListItem from '../../components/commentsListItem/commentsListItem'
 import { formatTime } from '../../util/formatTime'
 import 'github-markdown-css'
 import './Detail.less'
@@ -39,6 +40,9 @@ class Detail extends Component{
                     </div>
                     <div className="content_html" dangerouslySetInnerHTML={{ __html: this.state.detailContent.content }}>
                         {/* 文章内容 */}
+                    </div>
+                    <div className="comments_box">
+                        <commentsListItem></commentsListItem>
                     </div>
                 </div>
             </div>
