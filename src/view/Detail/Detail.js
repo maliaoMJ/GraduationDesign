@@ -2,7 +2,7 @@ import React ,{Component} from 'react'
 import TitleHeader from '../../components/TitleHeader/TitleHeader'
 import Loadding from '../../components/Loadding/Loadding'
 import getData from '../../util/getData'
-import commentsListItem from '../../components/commentsListItem/commentsListItem'
+import CommentsListItem from '../../components/commentsListItem/commentsListItem'
 import { formatTime } from '../../util/formatTime'
 import 'github-markdown-css'
 import './Detail.less'
@@ -13,16 +13,19 @@ class Detail extends Component{
         super(props)
         this.state = {
             detailContent:{},
-            user:{}
+            user:{},
+            comments:[]
         }
     }
 
     render(){
+        const COMMENTS = this.state.comments
         return (
             <div className="Detail">
                 
                 <TitleHeader title={this.state.detailContent.title} history={this.props.history}/>
                 {this.state.detailContent.author == null||undefined?<Loadding/>:(
+                    <div className="box">
                     <div className="user_header ">
                         <img src={this.state.user.avatar_url} alt="没有见过这么帅的图像吗？" />
                         <div className="user_info clearfix">
@@ -30,7 +33,7 @@ class Detail extends Component{
                             <span className="floor_faster">#楼主</span>
                         </div>
                     </div>
-                )}
+                
                 
                 <div className="detail_content">
                     <h3 className="title">{this.state.detailContent.title}</h3>
@@ -42,10 +45,22 @@ class Detail extends Component{
                         {/* 文章内容 */}
                     </div>
                     <div className="comments_box">
-                        <commentsListItem></commentsListItem>
+                        <div className="comments_header">
+                            <p><i className="fa fa-comments"></i> 共{this.state.detailContent.reply_count}条评论</p>
+                        </div>
+                        {COMMENTS.length <= 0 ? (<div className="nocomments">
+                            暂无评论，赶快去吐槽一下吧！
+                        </div>) :
+                            (this.state.comments.map((item)=>{
+                                return (<CommentsListItem data={item} key={item.id}/>)
+                            }))
+                        }
+                        
                     </div>
                 </div>
+                    </div>)}
             </div>
+            
         )
     }
     
@@ -58,7 +73,8 @@ class Detail extends Component{
             console.log(json)
             this.setState({
                 detailContent:json.data,
-                user:json.data.author
+                user:json.data.author,
+                comments:json.data.replies
             })
         })
         .catch(error=>{

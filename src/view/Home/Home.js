@@ -259,19 +259,19 @@ class Home extends Component{
        
 
         this.getMoreData(this, URL,this.state.goodCurrentPage,'good')
-        // scrollBtoom('good')
+     
 
         this.getMoreData(this, URL,this.state.shareCurrentPage,'share')
-        // scrollBtoom('share')
+     
 
        this.getMoreData(this, URL,this.state.askCurrentPage,'ask')
-        // scrollBtoom('ask')
+      
 
         this.getMoreData(this, URL,this.state.jobCurrentPage,'job')
-        // scrollBtoom('job')
+     
 
         this.getMoreData(this, URL,this.state.testCurrentPage,'dev')
-        // scrollBtoom('dev')
+
 
         this.getMoreData(this,URL, this.state.allCurrentPage, 'all')
         this.scrollBtoom(this,'all')
