@@ -160,6 +160,17 @@
         height:100%;
         background:rgba(0,0,0,0.8);
         z-index: 100000000;
+        display: none;
+        &.show{
+            display: block;
+            animation: shows 0.3s;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: forwards;
+        }
+        &.hide{
+            animation: hides 0.3s ease-in-out ;
+            animation-fill-mode: forwards;
+        }
         .panel_box{
             width:92%;
             position:absolute;
@@ -235,4 +246,13 @@
         }
     }
 
+}
+@keyframes hides{
+      0%{transform: scale(1)}
+    100%{transform: scale(0);display: none;}
+
+}
+@keyframes shows {
+       0%{transform: scale(0)}
+    100%{transform: scale(1);} 
 }

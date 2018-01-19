@@ -19,7 +19,7 @@ class CommentsListItem extends Component {
                     </div>
                     <div className="icon_box">
                         <i className="fa fa-thumbs-up"></i>
-                        <i className="fa fa-comments"></i>
+                        <i className="fa fa-comments" onClick={this.props.openPanel} id={this.props.data.id}></i>
                     </div>
                  </div>
                 <div className="center_comments_box">
